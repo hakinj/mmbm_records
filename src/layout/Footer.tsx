@@ -1,4 +1,4 @@
-import React from "react";
+
 import { FaInstagram, FaYoutube, FaSpotify } from "react-icons/fa";
 
 export default function Footer() {
