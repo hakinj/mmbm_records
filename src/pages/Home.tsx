@@ -36,6 +36,7 @@ const Home: React.FC = () => {
 
   return (
     <>
+    <div className="overflow-hidden">
       {/* <SmokeyCursor/> */}
       <ToastContainer autoClose={1000} draggable />
 
@@ -118,7 +119,7 @@ const Home: React.FC = () => {
 
       <Footer />
 
-
+</div>
 
     </>
   )

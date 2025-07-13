@@ -79,6 +79,7 @@ function Newsletter() {
       </td>
     </tr>
   </table>
+  
 </body>`
 
 
