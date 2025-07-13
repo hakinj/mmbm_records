@@ -1,16 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { db } from "../firebase"; // adjust path if needed
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import SendEmail from '../utils/SendEmail';
+import { motion, useAnimation, type Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 
 
 function Newsletter() {
     const [newsletter, setNewsletter] = useState({ email: '', name: '' });
     const [newsletterStatus, setNewsletterStatus] = useState('');
-   
-   
-    const {name, email} = newsletter
+
+    const controls = useAnimation();
+    const [ref, inView] = useInView({
+        threshold: 0.2,
+        triggerOnce: false,
+    });
+
+    useEffect(() => {
+        if (inView) {
+            controls.start("visible");
+        } else {
+            controls.start("hidden");
+        }
+    }, [inView, controls]);
+
+    const fadeUp: Variants = {
+        hidden: { opacity: 0, y: 70 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.8, ease: [0.42, 0, 0.58, 1] },
+        },
+      };
+
+
+    const { name, email } = newsletter
 
     const htmlContent = `<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #111111; color: #ffffff;">
   <table align="center" width="100%" style="max-width: 600px; background-color: #1a1a1a; padding: 20px;">
@@ -70,7 +95,7 @@ function Newsletter() {
                 createdAt: Timestamp.now()
             });
             setNewsletterStatus('success');
-            const data = {name, email, htmlContent}
+            const data = { name, email, htmlContent }
             await SendEmail(data)
             setNewsletter({ email: '', name: '' });
 
@@ -93,7 +118,10 @@ function Newsletter() {
     return (
         <>
             <section className="py-20 bg-[#000000]  from-orange-900/30 via-yellow-900/20 to-orange-800/30">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <motion.div
+                    initial="hidden"
+                    animate={controls}
+                    variants={fadeUp} ref={ref} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Stay in the Rhythm</h2>
                     <p className="text-xl text-orange-200 mb-8 max-w-2xl mx-auto">
                         Subscribe to our newsletter for exclusive releases, behind-the-scenes content, and early access to tickets.
@@ -134,7 +162,7 @@ function Newsletter() {
                             <p className="text-green-400">🎉 Welcome to the MMBM family! Check your email for confirmation.</p>
                         </div>
                     )}
-                </div>
+                </motion.div>
             </section>
         </>
     )
