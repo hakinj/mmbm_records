@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css"
 import TickerNav from "../layout/TicketNav";
 import Footer from "../layout/Footer";
-// import Waves from "../blocks/Backgrounds/Waves/Waves";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 // import SmokeyCursor  from "../components/lightswind/smokey-cursor"
 import "../App.css";
@@ -22,6 +22,8 @@ import LastestRelease from "./LastestRelease";
 
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+
 
   const slides = [
     "/bgNew.jpg",
@@ -91,6 +93,32 @@ const Home: React.FC = () => {
               Join Our Movement
             </button>
           </div>
+
+           <button
+      onClick={() => navigate("/shoppingpage")}
+      className="
+          mt-20
+        relative px-8 py-4
+        text-lg font-bold
+        text-white
+        rounded-full
+        bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600
+        shadow-lg shadow-pink-500/40
+        transition duration-300
+        hover:scale-105 hover:shadow-2xl
+        hover:shadow-indigo-500/70
+        overflow-hidden
+      "
+    >
+      <span className="relative z-10">🛒 Click to Shop our Official Collection</span>
+
+      {/* Glow effect */}
+      <span
+        className="absolute inset-0 rounded-full blur-lg opacity-60
+        bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600
+        animate-pulse"
+      ></span>
+    </button>
 
         </div>
 
